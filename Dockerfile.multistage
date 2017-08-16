@@ -14,7 +14,7 @@ RUN apk add --no-cache \
       libmicrohttpd-dev \
       openssl-dev \
       hwloc-dev@testing \
-      build-base\
+      build-base \
       cmake \
       coreutils \
       git
