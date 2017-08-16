@@ -15,7 +15,7 @@ RUN apk add --no-cache \
       libmicrohttpd-dev \
       openssl-dev \
       hwloc-dev@testing \
-      build-base\
+      build-base \
       cmake \
       coreutils \
       git
@@ -30,6 +30,14 @@ RUN git clone https://github.com/fireice-uk/xmr-stak-cpu.git \
     \
     && cp -t /app bin/xmr-stak-cpu config.txt \
     && chmod 777 -R /app
+RUN apk del --no-cache --purge \
+      libmicrohttpd-dev \
+      openssl-dev \
+      hwloc-dev@testing \
+      build-base \
+      cmake \
+      coreutils \
+      git || echo "apk purge error ignored"
 
 ###
 # Deployed image
@@ -38,7 +46,7 @@ RUN git clone https://github.com/fireice-uk/xmr-stak-cpu.git \
 
 WORKDIR /app
 
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> //etc/apk/repositories
+#RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> //etc/apk/repositories
 RUN apk add --no-cache \
       libmicrohttpd \
       openssl \
