@@ -9,6 +9,9 @@ RUN apt-get update \
         cmake \
         build-essential \
         git \
+        libhwloc-dev \
+        libhwloc5 \
+        hwloc \
     && pip install envtpl
 
 WORKDIR /app
@@ -23,7 +26,9 @@ RUN mkdir src \
     && cmake . \
     && make install \
     && cp -t /app bin/xmr-stak-cpu bin/config.txt \
-    && cd /app  
+    && cd /app \
+    && apt-get -y remove build-essential \
+    && apt-get -y autoremove
 
 COPY app .
 RUN chmod 777 -R /app
