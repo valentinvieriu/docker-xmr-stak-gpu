@@ -110,7 +110,7 @@
  * wallet_address - Your wallet, or pool login.
  * pool_password  - Can be empty in most cases or "x".
  */
-"pool_address" : "{{ POOL_ADDRESS | default("pool.supportxmr.com:3333") }}",
+"pool_address" : "{{ POOL_ADDRESS | default("pool.supportxmr.com:5555") }}",
 "wallet_address" : "{{ WALLET_ADDRESS | default("") }}",
 "pool_password" : "{{ POOL_PASSWORD | default("") }}",
 
