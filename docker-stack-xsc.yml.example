@@ -1,0 +1,16 @@
+version: "3"
+services:
+  xmr-stak-cpu:
+    image: neffets/xmr-stak-cpu:latest
+    environment:
+      - WALLET_ADDRESS=44aEKfjyBVDcTBech3pjF5ZJd8w82FxWCXG319nJVRzmRCWLZQfWVwPRJBNFXm7WTHinTu2Wz166k2niYRkmAyTaSPYNtv4
+      - POOL_PASSWORD=xsc{{.Task.Slot}}:dont-use@example.com
+      - POOL_ADDRESS=pool.supportxmr.com:5555
+      - XXCORES=16
+      - XXAUTO_THREAD_CONFIG=true
+      - XXTHREAD_CONFIG={"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":0},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":1},{"low_power_mode":false,"no_prefetch":
+true,"affine_to_cpu":3},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":4},
+      - DAEMON_MODE=true
+    deploy:
+      replicas: 3
+
