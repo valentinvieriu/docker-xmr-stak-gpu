@@ -1,0 +1,16 @@
+version: '2'
+services:
+  miner:
+    build: .
+    image: docker-xmr-stack-cpu
+    container_name: xmr-miner
+    environment:
+      WALLET_ADDRESS: '4GdoN7NCTi8a5gZug7PrwZNKjvHFmKeV11L6pNJPgj5QNEHsN6eeX3DaAQFwZ1ufD4LYCZKArktt113W7QjWvQ7CW8bj9Y7ncRBTiepL1v.onyx'
+      POOL_ADDRESS: 'xmr-usa.dwarfpool.com:8100'
+      POOL_PASSWORD: 'jan@trick77.com'
+      AUTO_THREAD_CONFIG: 'true'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    restart: unless-stopped

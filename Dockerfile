@@ -1,8 +1,7 @@
 ###
 # Build image
 ###
-#FROM alpine:edge AS build
-FROM alpine:edge
+FROM alpine:edge AS build
 
 ENV XMR_STAK_CPU_VERSION v1.3.0-1.5.0
 
@@ -30,23 +29,15 @@ RUN git clone https://github.com/fireice-uk/xmr-stak-cpu.git \
     \
     && cp -t /app bin/xmr-stak-cpu config.txt \
     && chmod 777 -R /app
-RUN apk del --no-cache --purge \
-      libmicrohttpd-dev \
-      openssl-dev \
-      hwloc-dev@testing \
-      build-base \
-      cmake \
-      coreutils \
-      git || echo "apk purge error ignored"
 
 ###
 # Deployed image
 ###
-#FROM alpine:edge
+FROM alpine:edge
 
 WORKDIR /app
 
-#RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> //etc/apk/repositories
+RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> //etc/apk/repositories
 RUN apk add --no-cache \
       libmicrohttpd \
       openssl \
@@ -55,7 +46,7 @@ RUN apk add --no-cache \
       py2-pip \
     && pip install envtpl
 
-#COPY --from=build app .
+COPY --from=build app .
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["xmr-stak-cpu"]
