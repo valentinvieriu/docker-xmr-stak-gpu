@@ -24,7 +24,7 @@ RUN git clone https://github.com/fireice-uk/xmr-stak-cpu.git \
     && git checkout -b build ${XMR_STAK_CPU_VERSION} \
     && sed -i 's/constexpr double fDevDonationLevel.*/constexpr double fDevDonationLevel = 0.0;/' donate-level.h \
     \
-    && cmake -DCMAKE_LINK_STATIC=ON . \
+    && cmake -DCMAKE_LINK_STATIC=ON -DHWLOC_ENABLE=OFF -DMICROHTTPD_ENABLE=OFF . \
     && make -j$(nproc) \
     \
     && cp -t /app bin/xmr-stak-cpu config.txt \
