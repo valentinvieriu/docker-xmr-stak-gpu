@@ -1,16 +1,32 @@
-version: '2'
+version: '2.2'
+volumes:
+  nvidia_driver_384.59:
+    external:
+      name: nvidia_driver_384.59
 services:
-  miner:
+  gpu-miner:
     build: .
-    image: docker-xmr-stack-cpu
-    container_name: xmr-miner
+    image: valentinvieriu/docker-xmr-stack-gpu:v1.1.1-1.4.0
+    container_name: xmr-gpu-miner
+    # cpuset: 0,1
+    # cpus: 6
+    stdin_open: true
     environment:
-      WALLET_ADDRESS: '4GdoN7NCTi8a5gZug7PrwZNKjvHFmKeV11L6pNJPgj5QNEHsN6eeX3DaAQFwZ1ufD4LYCZKArktt113W7QjWvQ7CW8bj9Y7ncRBTiepL1v.onyx'
-      POOL_ADDRESS: 'xmr-usa.dwarfpool.com:8100'
-      POOL_PASSWORD: 'jan@trick77.com'
-      AUTO_THREAD_CONFIG: 'true'
+      WALLET_ADDRESS: ${WALLET_ADDRESS}.gpu0
+      POOL_ADDRESS: ${POOL_ADDRESS}
+      POOL_PASSWORD: ${POOL_PASSWORD}
+      GPU_THREADS: 65
+      GPU_BLOCKS: 60
     ulimits:
       memlock:
         soft: -1
         hard: -1
     restart: unless-stopped
+    devices: 
+      - '/dev/nvidia0:/dev/nvidia0'
+      - '/dev/nvidiactl:/dev/nvidiactl'
+      - '/dev/nvidia-uvm:/dev/nvidia-uvm'
+      - '/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools'
+    # entrypoint: "/bin/bash -c"
+    volumes:
+      - 'nvidia_driver_384.59:/usr/local/nvidia:ro'
